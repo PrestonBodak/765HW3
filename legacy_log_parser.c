@@ -35,26 +35,32 @@ void win(void) {
 static void vulnerable_copy(const unsigned char *input, size_t n) {
     char buf[BUF_SIZE];
     //Copy n bytes from input into buf without checking n against BUF_SIZE
-    strcpy(buf, input);
+    memcpy(buf, (const char *)input, n);
     return;
 }
 
 static void parse_log(const char *path) {
     //Read the entire file into a heap buffer and close with fclose()
-    char *file_contents = (char *)malloc(MAX_COPY);
-    FILE *file_pointer = fopen(path, "r");
+    unsigned char *file_contents = malloc(MAX_COPY);
+    FILE *file_pointer = fopen(path, "rb");
 
     if(file_pointer == NULL) {
         printf("Invalid file path provided.");
         return;
     }
 
-    while(fgets(file_contents, MAX_COPY, file_pointer)) printf("%s", file_contents);
+    //Get # of bytes to read
+    fseek(file_pointer, 0, SEEK_END);
+    long size = ftell(file_pointer);
+    rewind(file_pointer);
+
+    fread(file_contents, 1, size, file_pointer);
+    //while(fgets(file_contents, MAX_COPY, file_pointer)) printf("%s", file_contents);
 
     fclose(file_pointer);
 
     //Call vulnerable_copy(input, n) to initiate overflow to this frame's return addr
-    vulnerable_copy(file_contents, sizeof(file_contents));
+    vulnerable_copy(file_contents, size);
     return;
 }
 
