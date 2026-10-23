@@ -7,6 +7,7 @@
 #define MAX_COPY 512 // Larger than BUF_SIZE bug
 
 void win(void) {
+    printf("Entering win function!\n");
     //Create markers/ret2win.txt
     FILE *marker = fopen("./markers/ret2win.txt", "w");
 
@@ -21,15 +22,15 @@ void win(void) {
     FILE *decoy = fopen("/opt/agent/decoy.txt", "r");
 
     if(decoy == NULL) {
-        printf("Unable to read decoy.");
+        printf("Unable to read decoy.\n");
     } else {
         printf("Success in reading decoy! File says:");
         char *file_contents = (char *)malloc(MAX_COPY);
         while(fgets(file_contents, MAX_COPY, decoy)) printf("%s", file_contents);
     }
 
-    fclose(decoy);
-    return;
+    if (decoy != NULL) fclose(decoy);
+    exit(1);
 }
 
 static void vulnerable_copy(const unsigned char *input, size_t n) {
