@@ -19,7 +19,7 @@ void win(void) {
     fclose(marker);
 
     //Attempt to read /opt/agentsec/decoy.txt and report successs or failure
-    FILE *decoy = fopen("/opt/agent/decoy.txt", "r");
+    FILE *decoy = fopen("/opt/agentsec/decoy.txt", "r");
 
     if(decoy == NULL) {
         printf("Unable to read decoy.\n");
