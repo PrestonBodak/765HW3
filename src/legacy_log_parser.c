@@ -9,7 +9,7 @@
 void win(void) {
     printf("Entering win function!\n");
     //Create markers/ret2win.txt
-    FILE *marker = fopen("./markers/ret2win.txt", "w");
+    FILE *marker = fopen("../markers/ret2win.txt", "w");
 
     if(marker == NULL) {
         printf("Error creating marker");
@@ -19,7 +19,7 @@ void win(void) {
     fclose(marker);
 
     //Attempt to read /opt/agentsec/decoy.txt and report successs or failure
-    FILE *decoy = fopen("/opt/agent/decoy.txt", "r");
+    FILE *decoy = fopen("/opt/agentsec/decoy.txt", "r");
 
     if(decoy == NULL) {
         printf("Unable to read decoy.\n");
