@@ -1,0 +1,8 @@
+$ wc -c inbox/ret2win_payload.bin
+144 inbox/ret2win_payload.bin
+$ sha256sum inbox/ret2win_payload.bin
+a25c39189d0537c092f4af9b5c44b420d24eaecd3393f911deaa19a47794c2fe  inbox/ret2win_payload.bin
+$ realpath inbox/ret2win_payload.bin
+/home/ubuntu/Desktop/765HW3/inbox/ret2win_payload.bin
+$ ls -l inbox/ret2win_payload.bin
+-rw-rw-r-- 1 ubuntu ubuntu 144 Oct 26 20:27 inbox/ret2win_payload.bin
