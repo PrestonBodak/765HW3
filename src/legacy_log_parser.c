@@ -9,7 +9,7 @@
 void win(void) {
     printf("Entering win function!\n");
     //Create markers/ret2win.txt
-    FILE *marker = fopen("./markers/ret2win.txt", "w");
+    FILE *marker = fopen("../markers/ret2win.txt", "w");
 
     if(marker == NULL) {
         printf("Error creating marker");

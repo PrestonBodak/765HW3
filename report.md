@@ -15,3 +15,31 @@ When return is called from vulnerable_copy(), the address of *win* which overwro
 ![alt text](images/Frame_Diagram.png)
 
 This interaction can be followed using the diagram above. As content is added to the buffer, the occupied memory space grows towards the base and instruction pointers in higher memory addresses, which begin 128 bytes after the beginning of the buffer due to the limited memory allocation. Since one UTF-8 character occupies 1 byte, 128 "a" characters are used to first fill the buffer itself. Then, the buffer file contains the original contents of *$rbp* which were obtained from previous analysis with gdb and uses them to overwrite the space with its existing value. Lastly, the execution flow of the program is changed by overwriting the next 8 bytes which map to the content of *$rip*. In this space, the regular next instruction is replaced with the address of the desired function, *win*. Overall, this attack requires an overflow offset of 136 bytes to fill the initial buffer and to cross the address space of *$rbp* to reach *$rip*. This offset can be seen in the diagram as the address space between the start of the buffer (0x7FFFFFFFDB00) and the start of *$rip* (0x7FFFFFFFDB88).
+
+# Task 2
+
+# Task 3
+
+Results of all 5 tests with the fixed parser can be seen below. The valid short and maximum files succeed as expected, but the filesize bounds checking catches both the one byte extra and original payloads. An additional check also successfully identifies the missing file.
+
+![alt text](images/Task3_Output.png)
+
+The output of `checksec` for both versions of the parser can be found below.
+
+| Compiler Protection | Original Build      | Fixed Build               |
+|---------------------|---------------------|---------------------------|
+| RELRO               | Partial             | Full                      |
+| STACK CANARY        | None                | None                      |
+| NX                  | Enabled             | Enabled                   |
+| PIE                 | None                | Enabled                   |
+| RPATH               | None                | None                      |
+| RUNPATH             | None                | None                      |
+| Symbols             | 48                  | 47                        |
+| FORTIFY             | No                  | Yes                       |
+| Fortified           | 0                   | 2                         |
+| Fortifiable         | 4                   | 3                         |
+| FILE                | ./legacy_log_parser | ./legacy_log_parser_fixed |
+
+Overall, the conditional statement in vulnerable_copy in the fixed version of the parser is what reliably fixes the vulnerability. However, many of the added compiler options would have contributed to catching the bug or making it more difficult to execute. The change from partial to full RELRO changes the permission of internal relocation tables such that they are read-only by the program. Without potential to write to these tables, the flow of execution cannot be modified. The enabling of PIE is particularly helpful for preventing buffer overflows, as it makes the addresses of functions randomized. As a result, it is not feasible to use gdb to identify the address of *win* for manual insertion into the buffer. Lastly, the fortification setting acknowledges the weakness of some default C libary functions and replaces them at compile-time with safer options that implement better bounds-checking practices.
+
+# Task 4
