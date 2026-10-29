@@ -1,0 +1,6 @@
+$ skills/legacy-parser/run_parser.sh inbox/short.log
+$ skills/legacy-parser/run_parser.sh /etc/hosts
+Rejected: path is outside inbox/
+$ skills/legacy-parser/run_parser.sh inbox/missing.log
+realpath: inbox/missing.log: No such file or directory
+Rejected: file does not exist
