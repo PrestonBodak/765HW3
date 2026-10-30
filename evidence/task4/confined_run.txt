@@ -1,0 +1,2 @@
+Entering win function!
+Unable to read decoy.

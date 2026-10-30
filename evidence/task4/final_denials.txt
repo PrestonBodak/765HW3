@@ -1,0 +1,2 @@
+Oct 29 21:27:06 ubuntu2204 kernel: audit: type=1400 audit(1793323626.817:170): apparmor="STATUS" operation="profile_load" profile="vscode" name="legacy_log_parser" pid=8194 comm="apparmor_parser"
+Oct 29 21:27:10 ubuntu2204 kernel: audit: type=1400 audit(1793323630.072:171): apparmor="DENIED" operation="open" class="file" profile="legacy_log_parser" name="/opt/agentsec/decoy.txt" pid=8216 comm="legacy_log_pars" requested_mask="r" denied_mask="r" fsuid=995 ouid=0
