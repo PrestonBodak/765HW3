@@ -1,0 +1,1 @@
+No AI was used in the completion of this assignment. All write-ups, analysis, and software created for this assignment were created solely by the code authore using our own knowledge and library documentation.
