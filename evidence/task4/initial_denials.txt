@@ -1,0 +1,7 @@
+$ sudo -u agentlab -- ./src/legacy_log_parser <absolute-payload-path>
+Result: realpath permission denied and libc loading denied
+
+$ sudo journalctl -k --since "10 minutes ago" | grep -i "apparmor.*DENIED"
+Oct 29 16:47:51 ubuntu2204 kernel: audit: type=1400 audit(1793306871.606:171): apparmor="DENIED" operation="open" class="file" profile="legacy_log_parser" name="/usr/lib/x86_64-linux-gnu/libc.so.6" pid=7873 comm="legacy_log_pars" requested_mask="r" denied_mask="r" fsuid=995 ouid=0
+Oct 29 16:47:51 ubuntu2204 kernel: audit: type=1400 audit(1793306871.606:172): apparmor="DENIED" operation="open" class="file" profile="legacy_log_parser" name="/usr/lib/x86_64-linux-gnu/libc.so.6" pid=7873 comm="legacy_log_pars" requested_mask="r" denied_mask="r" fsuid=995 ouid=0
+Oct 29 16:47:51 ubuntu2204 kernel: audit: type=1400 audit(1793306871.606:173): apparmor="DENIED" operation="open" class="file" profile="legacy_log_parser" name="/usr/lib/x86_64-linux-gnu/libc.so.6" pid=7873 comm="legacy_log_pars" requested_mask="r" denied_mask="r" fsuid=995 ouid=0
